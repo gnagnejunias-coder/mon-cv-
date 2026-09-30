@@ -767,19 +767,30 @@ body {
 
 .submit-btn {
     width: 100%;
-    background-color: var(--primary-color);
-    color: var(--btn-text-primary);
+    background-color: #25D366; /* Vert officiel WhatsApp */
+    color: #ffffff;
     border: none;
     padding: 12px;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 600;
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+}
+
+.submit-btn i {
+    font-size: 1.3rem;
 }
 
 .submit-btn:hover {
-    background-color: var(--primary-hover);
+    background-color: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
 }
 
 /* Lightbox Photo Modal */

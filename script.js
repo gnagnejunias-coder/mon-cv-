@@ -137,34 +137,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initialisation EmailJS — REMPLACER par votre clé publique
-    emailjs.init("YOUR_PUBLIC_KEY");
-
+    // ===== Formulaire de contact -> WhatsApp Direct =====
     if(form) {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const submitBtn = form.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Envoi en cours...';
-            submitBtn.disabled = true;
+            const company = document.getElementById('companyName').value.trim();
+            const mission = document.getElementById('mission').value.trim();
+            const budget = document.getElementById('budget').value.trim();
 
-            // REMPLACER YOUR_SERVICE_ID et YOUR_TEMPLATE_ID par vos identifiants EmailJS
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-                from_name: document.getElementById('companyName').value,
-                mission: document.getElementById('mission').value,
-                budget: document.getElementById('budget').value,
-            }).then(function() {
-                alert('✅ Merci ! Votre message a bien été envoyé.');
-                modal.classList.remove("show");
-                form.reset();
-            }, function(error) {
-                alert('❌ Erreur lors de l\'envoi. Veuillez réessayer ou me contacter directement.');
-                console.error('EmailJS Error:', error);
-            }).finally(function() {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            });
+            let message = `Bonjour Ange Junias,\n\n`;
+            message += `Je vous contacte depuis votre site web pour un projet :\n\n`;
+            message += `👤 *Nom / Entreprise :* ${company}\n`;
+            message += `📋 *Mission / Projet :* ${mission}\n`;
+            if (budget) {
+                message += `💰 *Budget estimé :* ${budget}\n`;
+            }
+
+            const phoneNumber = "2250500968284";
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+            // Ouvrir WhatsApp
+            window.open(whatsappUrl, '_blank');
+
+            // Fermer la modal et réinitialiser
+            modal.classList.remove("show");
+            form.reset();
         });
     }
 
