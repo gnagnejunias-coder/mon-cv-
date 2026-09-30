@@ -335,25 +335,37 @@ body {
     color: var(--text-main);
 }
 
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+.skill-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.tag {
-    background-color: #334155;
-    color: var(--primary-color);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.9rem;
+.skill-list li {
+    position: relative;
+    padding: 8px 0 8px 20px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
     font-weight: 500;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
     transition: var(--transition);
 }
 
-.tag:hover {
-    background-color: var(--primary-color);
-    color: #0f172a;
+.skill-list li:last-child {
+    border-bottom: none;
+}
+
+.skill-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.skill-list li:hover {
+    color: var(--primary-color);
+    padding-left: 25px;
 }
 
 /* Contact Section */
