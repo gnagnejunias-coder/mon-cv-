@@ -91,6 +91,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ===== Lightbox Photo Modal Logic =====
+    const photoModal = document.getElementById("photoLightboxModal");
+    const openPhotoBtn = document.getElementById("openPhotoModal");
+    const closePhotoBtn = document.getElementById("closePhotoModal");
+    const photoBackdrop = document.getElementById("photoLightboxBackdrop");
+
+    function openPhoto() {
+        if (photoModal) {
+            photoModal.classList.add("show");
+            document.body.style.overflow = "hidden"; // Empêche le défilement en arrière-plan
+        }
+    }
+
+    function closePhoto() {
+        if (photoModal) {
+            photoModal.classList.remove("show");
+            document.body.style.overflow = "";
+        }
+    }
+
+    if (openPhotoBtn) {
+        openPhotoBtn.addEventListener("click", openPhoto);
+        openPhotoBtn.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openPhoto();
+            }
+        });
+    }
+
+    if (closePhotoBtn) {
+        closePhotoBtn.addEventListener("click", closePhoto);
+    }
+
+    if (photoBackdrop) {
+        photoBackdrop.addEventListener("click", closePhoto);
+    }
+
+    // Fermeture avec la touche Échap (Escape)
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            closePhoto();
+            if (modal) modal.classList.remove("show");
+        }
+    });
+
     // Initialisation EmailJS — REMPLACER par votre clé publique
     emailjs.init("YOUR_PUBLIC_KEY");
 
