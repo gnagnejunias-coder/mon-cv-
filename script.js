@@ -1,4 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // ===== Theme Toggle (Dark / Light Mode) =====
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    
+    // Appliquer le thème sauvegardé
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -74,13 +91,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Initialisation EmailJS — REMPLACER par votre clé publique
+    emailjs.init("YOUR_PUBLIC_KEY");
+
     if(form) {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            // Ici, vous pouvez ajouter la logique pour envoyer les données du formulaire
-            alert('Merci ! Votre message a bien été envoyé.');
-            modal.classList.remove("show");
-            form.reset();
+            
+            const submitBtn = form.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+
+            // REMPLACER YOUR_SERVICE_ID et YOUR_TEMPLATE_ID par vos identifiants EmailJS
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                from_name: document.getElementById('companyName').value,
+                mission: document.getElementById('mission').value,
+                budget: document.getElementById('budget').value,
+            }).then(function() {
+                alert('✅ Merci ! Votre message a bien été envoyé.');
+                modal.classList.remove("show");
+                form.reset();
+            }, function(error) {
+                alert('❌ Erreur lors de l\'envoi. Veuillez réessayer ou me contacter directement.');
+                console.error('EmailJS Error:', error);
+            }).finally(function() {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
         });
     }
 
